@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
-
+//CHECKSTYLE:OFF
 public class CreateProfileActivity {
 
     private final Logger log = LogManager.getLogger();

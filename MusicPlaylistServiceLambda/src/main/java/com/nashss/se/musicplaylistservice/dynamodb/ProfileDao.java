@@ -129,4 +129,13 @@ public class ProfileDao {
         this.dynamoDbMapper.save( profileToAddEventTo);
         return eventsStoredAlready;
     }
+    public Set<String> removeEventFromProfile(String eventId, String profileId){
+        Profile profileToRemoveEventFrom = this.getProfile(profileId);
+        Set<String> eventsAlreadyStored = profileToRemoveEventFrom.getEvents();
+        for(String s : eventsAlreadyStored){
+            if(s.equals(eventId)){
+                eventsAlreadyStored.remove(eventId);
+            }
+        }
+    }
 }
