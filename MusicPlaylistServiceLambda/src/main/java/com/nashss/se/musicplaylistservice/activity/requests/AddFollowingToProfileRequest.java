@@ -3,12 +3,12 @@ package com.nashss.se.musicplaylistservice.activity.requests;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = AddProfileToFollowingRequest.Builder.class)
-public class AddProfileToFollowingRequest {
+@JsonDeserialize(builder = AddFollowingToProfileRequest.Builder.class)
+public class AddFollowingToProfileRequest {
     private final String id;
     private final String idToAdd;
 
-    private AddProfileToFollowingRequest(String id, String idToAdd) {
+    private AddFollowingToProfileRequest(String id, String idToAdd) {
         this.id = id;
         this.idToAdd = idToAdd;
     }
@@ -30,8 +30,8 @@ public class AddProfileToFollowingRequest {
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static AddProfileToFollowingRequest.Builder builder() {
-        return new AddProfileToFollowingRequest.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     @JsonPOJOBuilder
@@ -39,18 +39,18 @@ public class AddProfileToFollowingRequest {
         private String id;
         private String idToAdd;
 
-        public AddProfileToFollowingRequest.Builder withId(String id) {
+        public Builder withId(String id) {
             this.id = id;
             return this;
         }
 
-        public AddProfileToFollowingRequest.Builder withIdToAdd(String idToAdd) {
+        public Builder withIdToAdd(String idToAdd) {
             this.idToAdd = idToAdd;
             return this;
         }
 
-        public AddProfileToFollowingRequest build() {
-            return new AddProfileToFollowingRequest(id, idToAdd);
+        public AddFollowingToProfileRequest build() {
+            return new AddFollowingToProfileRequest(id, idToAdd);
         }
     }
 }

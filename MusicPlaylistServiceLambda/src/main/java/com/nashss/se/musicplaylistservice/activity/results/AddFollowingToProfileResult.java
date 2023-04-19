@@ -1,15 +1,13 @@
 package com.nashss.se.musicplaylistservice.activity.results;
 
-import com.nashss.se.musicplaylistservice.models.ProfileModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemoveFromFollowingResult {
+public class AddFollowingToProfileResult {
 
     private final List<String> profileList;
 
-    private RemoveFromFollowingResult (List<String> profileList) {
+    private AddFollowingToProfileResult(List<String> profileList) {
         this.profileList = profileList;
     }
 
@@ -19,29 +17,28 @@ public class RemoveFromFollowingResult {
 
     @Override
     public String toString() {
-        return "RemoveFromFollowingResult{" +
+        return "AddProfileToFollowingResult{" +
                 "profileList=" + profileList +
                 '}';
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static RemoveFromFollowingResult.Builder builder() {
-        return new RemoveFromFollowingResult.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {
         private List<String> profileList;
 
-        public RemoveFromFollowingResult.Builder withProfileList(List<String> profileList) {
+        public Builder withProfileList(List<String> profileList) {
             this.profileList = new ArrayList<>(profileList);
             return this;
         }
 
-        public RemoveFromFollowingResult build() {
-            return new RemoveFromFollowingResult(profileList);
+        public AddFollowingToProfileResult build() {
+            return new AddFollowingToProfileResult(profileList);
         }
 
     }
 }
-
 

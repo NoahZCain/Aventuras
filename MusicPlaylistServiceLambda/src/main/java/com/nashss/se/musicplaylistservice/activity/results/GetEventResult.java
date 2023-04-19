@@ -1,7 +1,6 @@
 package com.nashss.se.musicplaylistservice.activity.results;
-
 import com.nashss.se.musicplaylistservice.models.EventModel;
-import com.nashss.se.musicplaylistservice.models.ProfileModel;
+
 
 public class GetEventResult {
 
@@ -25,7 +24,7 @@ public class GetEventResult {
     public static class Builder{
         private EventModel eventModel;
 
-        public GetEventResult.Builder withEventModel(EventModel eventModel){
+        public Builder withEventModel(EventModel eventModel){
             this.eventModel = eventModel;
             return this;
         }
@@ -36,8 +35,8 @@ public class GetEventResult {
 
     }
 
-    public static GetEventResult.Builder builder(){
-        return new GetEventResult.Builder();
+    public static Builder builder(){
+        return new Builder();
     }
 
 }

@@ -3,11 +3,11 @@ package com.nashss.se.musicplaylistservice.activity.results;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddProfileToFollowingResult {
+public class RemoveFollowingFromProfileResult {
 
     private final List<String> profileList;
 
-    private AddProfileToFollowingResult(List<String> profileList) {
+    private RemoveFollowingFromProfileResult(List<String> profileList) {
         this.profileList = profileList;
     }
 
@@ -17,28 +17,29 @@ public class AddProfileToFollowingResult {
 
     @Override
     public String toString() {
-        return "AddProfileToFollowingResult{" +
+        return "RemoveFromFollowingResult{" +
                 "profileList=" + profileList +
                 '}';
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static Builder builder() {
-        return new AddProfileToFollowingResult.Builder();
+    public static RemoveFollowingFromProfileResult.Builder builder() {
+        return new RemoveFollowingFromProfileResult.Builder();
     }
 
     public static class Builder {
         private List<String> profileList;
 
-        public Builder withProfileList(List<String> profileList) {
+        public RemoveFollowingFromProfileResult.Builder withProfileList(List<String> profileList) {
             this.profileList = new ArrayList<>(profileList);
             return this;
         }
 
-        public AddProfileToFollowingResult build() {
-            return new AddProfileToFollowingResult(profileList);
+        public RemoveFollowingFromProfileResult build() {
+            return new RemoveFollowingFromProfileResult(profileList);
         }
 
     }
 }
+
 

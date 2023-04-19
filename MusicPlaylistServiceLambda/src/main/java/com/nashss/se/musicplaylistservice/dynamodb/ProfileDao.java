@@ -1,21 +1,18 @@
 package com.nashss.se.musicplaylistservice.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.nashss.se.musicplaylistservice.dynamodb.models.Event;
 import com.nashss.se.musicplaylistservice.dynamodb.models.Profile;
 import com.nashss.se.musicplaylistservice.exceptions.InvalidAttributeException;
-import com.nashss.se.musicplaylistservice.exceptions.InvalidAttributeValueException;
+import com.nashss.se.musicplaylistservice.exceptions.InvalidBirthdateException;
 import com.nashss.se.musicplaylistservice.exceptions.ProfileNotFoundException;
 import com.nashss.se.musicplaylistservice.metrics.MetricsConstants;
 import com.nashss.se.musicplaylistservice.metrics.MetricsPublisher;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,7 +26,22 @@ public class ProfileDao {
         this.dynamoDbMapper = dynamoDbMapper;
         this.metricsPublisher = metricsPublisher;
     }
+    public boolean isValidBirthday(ZonedDateTime birthday) {
+        // Get today's date in the same time zone as the birthday
+        LocalDate today = LocalDate.now(birthday.getZone());
 
+        // Check that the birthday is not in the future
+        if (birthday.toLocalDate().isAfter(today)) {
+            return false;
+        }
+
+        // Check that the person is less than 120 years old
+        if (birthday.plusYears(120).toLocalDate().isBefore(today)) {
+            return false;
+        }
+
+        return true;
+    }
     public Profile getProfile(String id){
 
         Profile profile = this.dynamoDbMapper.load(Profile.class, id);
@@ -43,39 +55,49 @@ public class ProfileDao {
         return profile;
     }
 
-    public Profile saveProfile(boolean isNew, String emailAddress, String firstName, String lastName, String location, String gender, ZonedDateTime dateOfBirth) {
+    public Profile saveProfile(boolean isNew, String id, String firstName, String lastName, String location, String gender, ZonedDateTime dateOfBirth) {
         Profile saveProfile = new Profile();
         //needed either for update or save bc its the hashkey
-        saveProfile.setId(emailAddress);
+        saveProfile.setId(id);
         //if this is a new profile we are saving just save the info we are given we know this bc we passed true
         if(isNew) {
             saveProfile.setFirstName(firstName);
             saveProfile.setLastName(lastName);
             saveProfile.setLocation(location);
             saveProfile.setGender(gender);
-            //this needs to be a zoned datetime object
-            saveProfile.setDateOfBirth(dateOfBirth.toString());
+            //this needs to be a zoned datetime object to check for valid birthday but stored as a string
+            //so you would need to make a function that does that
+            if(isValidBirthday(dateOfBirth)) {
+                saveProfile.setDateOfBirth(dateOfBirth.toString());
+            } else {
+                throw new InvalidBirthdateException("You are probably less than 120 years old and born before today.");
+            }
             //they couldn't possibly have values so we need to set them here so the field exists
-            saveProfile.setEvents(new HashSet<>());
-            saveProfile.setFollowing(new HashSet<>());
             this.dynamoDbMapper.save(saveProfile);
 
         //if the boolean is false it means we are updating and need to check each field to see if it needs updating
         } else {
-            if (firstName != null || !gender.isEmpty()) {
+            Profile oldProfile = this.getProfile(id);
+            saveProfile.setFollowing(oldProfile.getFollowing());
+            saveProfile.setEvents(oldProfile.getEvents());
+            if (firstName != null || !firstName.isEmpty()) {
                 saveProfile.setFirstName(firstName);
+            } 
+            if (lastName != null || !lastName.isEmpty()) {
+                saveProfile.setLastName(lastName);
             }
-            if (lastName != null || !gender.isEmpty()) {
-                saveProfile.setFirstName(lastName);
-            }
-            if (location != null || !gender.isEmpty()) {
-                saveProfile.setFirstName(location);
+            if (location != null || !location.isEmpty()) {
+                saveProfile.setLocation(location);
             }
             if (gender != null || !gender.isEmpty()) {
-                saveProfile.setFirstName(gender);
+                saveProfile.setGender(gender);
             }
             if (!Objects.isNull(dateOfBirth)) {
-                saveProfile.setDateOfBirth(dateOfBirth.toString());
+                if(isValidBirthday(dateOfBirth)) {
+                    saveProfile.setDateOfBirth(dateOfBirth.toString());
+                } else {
+                    throw new InvalidBirthdateException("You are probably less than 120 years old and born before today.");
+                }
             }
             this.dynamoDbMapper.save(saveProfile);
         }
@@ -124,8 +146,6 @@ public class ProfileDao {
         Set<String> eventsStoredAlready = profileToAddEventTo.getEvents();
         eventsStoredAlready.add(eventId);
         profileToAddEventTo.setEvents(eventsStoredAlready);
-        //??? make sure this doesn't overwrite the existing fields in the database object its late and I can't
-        //remember off the top of my head
         this.dynamoDbMapper.save( profileToAddEventTo);
         return eventsStoredAlready;
     }

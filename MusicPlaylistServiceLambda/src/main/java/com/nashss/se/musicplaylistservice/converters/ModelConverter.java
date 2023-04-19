@@ -1,5 +1,6 @@
 package com.nashss.se.musicplaylistservice.converters;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import com.nashss.se.musicplaylistservice.dynamodb.models.Event;
 import com.nashss.se.musicplaylistservice.dynamodb.models.Profile;
 import com.nashss.se.musicplaylistservice.models.EventModel;
 import com.nashss.se.musicplaylistservice.models.ProfileModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -18,6 +21,7 @@ public class ModelConverter {
      *
      * @return the converted ProfileModel
      */
+    private final Logger log = LogManager.getLogger();
 
     public ProfileModel toProfileModel(Profile profile){
         return ProfileModel.builder()
@@ -26,7 +30,7 @@ public class ModelConverter {
                 .withLastName(profile.getLastName())
                 .withLocation(profile.getLocation())
                 .withGender(profile.getGender())
-                .withDateOfBirth(profile.getDateOfBirth().toString())
+                .withDateOfBirth(profile.getDateOfBirth())
                 .withFollowing(profile.getFollowing())
                 .withEvents(profile.getEvents())
                 .build();
@@ -43,9 +47,9 @@ public class ModelConverter {
         return EventModel.builder()
         .withEventId(event.getEventId())
         .withName(event.getName())
-        .withEventCreator(event.getCreatedBy())
+        .withEventCreator(event.getEventCreator())
         .withEventAddress(event.getAddress())
-        .withDescription(event.getDesciption())
+        .withDescription(event.getDescription())
         .withDateTime(event.getDateTime())
         .withCategory(event.getCategory())
         .withAttendees(event.getAttendees())

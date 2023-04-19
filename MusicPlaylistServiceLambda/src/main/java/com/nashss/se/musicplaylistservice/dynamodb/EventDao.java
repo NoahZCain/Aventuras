@@ -9,15 +9,12 @@ import com.nashss.se.musicplaylistservice.metrics.MetricsPublisher;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,6 +24,7 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class EventDao {
+    private final Logger log = LogManager.getLogger();
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
 
@@ -48,18 +46,16 @@ public class EventDao {
      * @param eventId the Event ID
      * @return the stored Event, or null if none was found.
      */
+
     public Event getEvent(String eventId) {
+
         Event event = this.dynamoDbMapper.load(Event.class, eventId);
+
 
         if (event == null) {
             metricsPublisher.addCount(MetricsConstants.GETEVENT_EVENTNOTFOUND_COUNT, 1);
             throw new EventNotFoundException("Could not find event with id " + eventId);
         }
-
-        ZonedDateTime dateTime = event.getDateTime();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = dateTime.format(formatter);
-        this.checkEventDateTime(formattedDateTime);
 
         metricsPublisher.addCount(MetricsConstants.GETEVENT_EVENTNOTFOUND_COUNT, 0);
         return event;
@@ -75,9 +71,11 @@ public class EventDao {
     // backend so since this is just checking the datetime issue lets call this that and the other save
 
     public boolean checkEventDateTime(String eventTime) {
-        ZonedDateTime now = ZonedDateTime.now();
+        ZonedDateTime eventDate = ZonedDateTime.parse(eventTime);
+        ZonedDateTime now = ZonedDateTime.now(eventDate.getZone());
+
         //just make sure this gets tested between now and Friday so we are sure 100% its effective
-        if(ZonedDateTime.parse(eventTime).isAfter(now)){
+        if(eventDate.isAfter(now)){
             return true;
         } else {
             //create this exception handling I just put this here as an example
@@ -96,13 +94,15 @@ public class EventDao {
 
         //if this is new and this event is after the date time of now
         if(isNew && checkEventDateTime(dateTime)){
-            event.setEventId();
+            event.setEventId(event.generateId());
             event.setName(name);
             event.setEventCreator(eventCreator);
             event.setAddress(address);
             event.setDescription(description);
             event.setDateTime(dateTime);
-            event.setCategory(new HashSet<>());
+
+            event.setCategory(new HashSet<>(category));
+            event.setAttendees(new HashSet<>(Collections.singleton(eventCreator)));
 
         //if it's not a new event, this must an update
         } else {
@@ -130,7 +130,7 @@ public class EventDao {
                 event.setCategory(categories);
             }
         }
-
+        System.out.println(event);
         this.dynamoDbMapper.save(event);
 
         return event;

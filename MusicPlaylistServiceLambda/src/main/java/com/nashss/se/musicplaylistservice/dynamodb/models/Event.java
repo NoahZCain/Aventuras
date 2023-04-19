@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.nashss.se.musicplaylistservice.utils.UniqueIdGenerator;
 
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -22,8 +21,8 @@ public class Event {
     private String address;
     private String description;
     private String dateTime;
-    private Set<String> category = new HashSet<>();
-    private Set<String> attendees = new HashSet<>();
+    private Set<String> category;
+    private Set<String> attendees;
 
 
     @DynamoDBHashKey(attributeName = "eventId")
@@ -31,13 +30,12 @@ public class Event {
         return eventId;
     }
 
-    private String generateId() {
-        String eventId = UniqueIdGenerator.generateUniqueId();
-        return eventId;
+    public String generateId() {
+        return UniqueIdGenerator.generateUniqueId();
     }
 
-    public void setEventId() {
-        this.eventId = generateId();
+    public void setEventId(String eventId){
+        this.eventId = eventId;
     }
 
     @DynamoDBAttribute(attributeName = "name")
@@ -50,7 +48,7 @@ public class Event {
     }
 
     @DynamoDBAttribute(attributeName = "event_creator")
-    public String getCreatedBy() {
+    public String getEventCreator() {
         return eventCreator;
     }
 
@@ -68,7 +66,7 @@ public class Event {
     }
 
     @DynamoDBAttribute(attributeName = "description")
-    public String getDesciption() {
+    public String getDescription() {
         return description;
     }
 
@@ -76,9 +74,9 @@ public class Event {
         this.description = description;
     }
 
-    @DynamoDBRangeKey(attributeName = "date_time")
-    public ZonedDateTime getDateTime() {
-        return ZonedDateTime.parse(dateTime);
+    @DynamoDBAttribute(attributeName = "date_time")
+    public String getDateTime() {
+        return dateTime;
     }
 
     public void setDateTime(String dateTime) {
@@ -87,20 +85,20 @@ public class Event {
 
     @DynamoDBAttribute(attributeName = "category")
     public Set<String> getCategory() {
-        return category;
+        return new HashSet<>(category);
     }
 
     public void setCategory(Set<String> category) {
-        this.category.addAll(category);
+        this.category = category;
     }
 
     @DynamoDBAttribute(attributeName = "attendees")
     public Set<String> getAttendees() {
-        return attendees;
+        return new HashSet<>(attendees);
     }
 
     public void setAttendees(Set<String> attendees) {
-        this.attendees.addAll(attendees);
+        this.attendees = attendees;
     }
 
     @Override

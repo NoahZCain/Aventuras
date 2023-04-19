@@ -36,6 +36,7 @@ Globals:
       AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
       AllowHeaders: "'content-type,authorization'"
       AllowOrigin: "'*'"
+      AllowCredentials: "'true'"
     Auth:
       DefaultAuthorizer: CognitoAuthorizer
       AddDefaultAuthorizerToCorsPreflight: false
@@ -284,7 +285,7 @@ Resources:
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.AddEventToProfileLambda:handleRequest
+      Handler: com.nashss.se.musicplaylistservice.lambda.AddEventToProfileLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -304,7 +305,7 @@ Resources:
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.RemoveEventFromProfileLambda:handleRequest
+      Handler: com.nashss.se.musicplaylistservice.lambda.RemoveEventFromProfileLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -324,7 +325,7 @@ Resources:
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.AddFollowingToProfileLambda:handleRequest
+      Handler: com.nashss.se.musicplaylistservice.lambda.AddFollowingToProfileLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -344,7 +345,7 @@ Resources:
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.RemoveFollowingFromProfileLambda:handleRequest
+      Handler: com.nashss.se.musicplaylistservice.lambda.RemoveFollowingFromProfileLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -416,7 +417,7 @@ Resources:
         MusicPlaylistService:
           Type: Api
           Properties:
-            Path: /events
+            Path: /events/create
             Method: post
 
   UpdateEventLambda:
@@ -461,13 +462,9 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "eventId"
           AttributeType: "S"
-        - AttributeName: "date_time"
-          AttributeType: "S"
       KeySchema:
         - AttributeName: "eventId"
           KeyType: "HASH"
-        - AttributeName: "date_time"
-          KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "events"
 

@@ -1,10 +1,9 @@
 package com.nashss.se.musicplaylistservice.activity.requests;
 
-import com.amazonaws.internal.config.Builder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = UpdateProfileRequest.class)
+@JsonDeserialize(builder = UpdateProfileRequest.Builder.class)
 public class UpdateProfileRequest {
     private final String firstName;
     private final String lastName;

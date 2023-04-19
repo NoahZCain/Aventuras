@@ -14,9 +14,9 @@
     align-items: center;
     padding: 10px;
 }
-body{
+/* body{
     overflow:hidden;
-}
+} */
 .page-body-background {
     background: var(--pageBackgroundColor);
 	background-size: 400% 400%;
@@ -108,7 +108,9 @@ body{
 color:white;
 }
 .btn-dark {
+    background-color: var(--navbarColor);
     color: var(--textColor);
+    border: black;
 }
 .card {
     background-color: var(--textColor);
@@ -125,6 +127,10 @@ color:white;
 .nav-link .nav-profile-icon {
     color: var(--textColor);
     font-size: 10rem;
+}
+.nav-profile-icon-sm {
+    color: var(--textColor);
+    font-size: 2rem;
 }
 .nav-link .nav-profile-icon:hover {
     color:var(--hoverColor);
@@ -145,6 +151,28 @@ color:white;
 }
 .d-sm-inline {
     color: var(--textColor);
+}
+h3#names.names.text-following {
+    color: var(--textColor)
+}
+.modal {
+    text-align: center;
+    padding: 0!important;
+  }
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+.modal-content {
+    background: var(--pageBackgroundColor);
 }
 
 /* mobile compatibility settings */

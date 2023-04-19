@@ -21,8 +21,8 @@ public class GetEventActivity {
     }
 
     public GetEventResult handleRequest(final GetEventRequest getEventRequest){
-        log.info("Receive GetEventResult {} ", getEventRequest);
 
+        log.info("Receive GetEventResult {} ", getEventRequest);
 
         String id = getEventRequest.getEventId();
         Event event = eventDao.getEvent(id);
