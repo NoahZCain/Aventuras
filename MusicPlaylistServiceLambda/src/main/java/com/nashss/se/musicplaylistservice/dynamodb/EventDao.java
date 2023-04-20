@@ -1,5 +1,7 @@
 package com.nashss.se.musicplaylistservice.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.nashss.se.musicplaylistservice.dynamodb.models.Event;
 import com.nashss.se.musicplaylistservice.exceptions.EventNotFoundException;
 import com.nashss.se.musicplaylistservice.exceptions.EventTimeIsInvalidException;
@@ -15,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -59,6 +62,18 @@ public class EventDao {
 
         metricsPublisher.addCount(MetricsConstants.GETEVENT_EVENTNOTFOUND_COUNT, 0);
         return event;
+    }
+
+    public List<String> getAllEventsInChronologicalOrder() {
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        List<Event> eventList = dynamoDbMapper.scan(Event.class, scanExpression);
+
+        List<String> eventInfoList = eventList.stream()
+                .map(e -> String.format("EventId: %s, Name: %s, DateTime: %s, Location: %s, CreatedBy: %s",
+                        e.getEventId(), e.getName(), e.getDateTime(), e.getAddress(), e.getEventCreator()))
+                .collect(Collectors.toList());
+
+        return eventInfoList;
     }
 
     /**
@@ -135,6 +150,8 @@ public class EventDao {
 
         return event;
     }
+
+
 
     /**
      * Perform a search (via a "scan") of the events table for events matching the given criteria.

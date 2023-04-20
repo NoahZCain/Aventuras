@@ -33,4 +33,6 @@ public interface ServiceComponent {
     UpdateProfileActivity provideUpdateProfileActivity();
 
     GetEventActivity provideGetEventActivity();
+
+    GetAllEventsActivity provideGetAllEventsActivity();
 }
