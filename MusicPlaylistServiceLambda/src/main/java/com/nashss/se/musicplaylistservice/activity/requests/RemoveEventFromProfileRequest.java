@@ -1,55 +1,57 @@
 package com.nashss.se.musicplaylistservice.activity.requests;
 
-import com.amazonaws.internal.config.Builder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder= RemoveEventFromProfileRequest.class)
+@JsonDeserialize(builder= RemoveEventFromProfileRequest.Builder.class)
 public class RemoveEventFromProfileRequest {
-    private final String profileId;
-    private final String eventIdToRemove;
+    private final String eventId;
 
-    private RemoveEventFromProfileRequest(String profileId,String eventIdToRemove){
+    private final String profileId;
+
+    private RemoveEventFromProfileRequest(String eventId,  String profileId){
+        this.eventId = eventId;
         this.profileId = profileId;
-        this.eventIdToRemove = eventIdToRemove;
+    }
+
+    public String getEventId() {
+        return eventId;
     }
 
     public String getProfileId() {
         return profileId;
     }
 
-    public String getEventIdToRemove() {
-        return eventId;
-    }
-
     @Override
     public String toString() {
         return "RemoveEventFromProfileRequest{" +
-                "profileId='" + profileId + '\'' +
-                ", eventIdToRemove='" + eventIdToRemove + '\'' +
+                "eventId='" + eventId + '\'' +
+                ", profileId='" + profileId + '\'' +
                 '}';
     }
+
     //CHECKSTYLE:OFF:Builder
 
     public static Builder builder(){
         return new Builder();
     }
-   @JsonPOJOBuilder
+    @JsonPOJOBuilder
     public static class Builder{
 
+        private String eventId;
         private String profileId;
-        private String eventIdToRemove;
 
-        public Builder withProfileId(String profileId){
-            this.profileId = profileId;
-             return this;
+        public Builder withEventId(String eventId) {
+            this.eventId = eventId;
+            return this;
         }
-        public Builder withEventIdToRemove(String eventIdToRemove){
-            this.eventIdToRemove = eventIdToRemove;
+
+        public Builder withProfileId(String profileId) {
+            this.profileId = profileId;
             return this;
         }
         public RemoveEventFromProfileRequest build(){
-            return new RemoveEventFromProfileRequest(profileId,eventIdToRemove);
+            return new RemoveEventFromProfileRequest(eventId, profileId);
         }
-   }
+    }
 }
