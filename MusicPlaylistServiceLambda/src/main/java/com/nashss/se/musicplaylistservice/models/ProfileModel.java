@@ -1,10 +1,9 @@
 package com.nashss.se.musicplaylistservice.models;
 
-import java.time.ZonedDateTime;
-import java.util.List;
+
 import java.util.Objects;
 import java.util.Set;
-
+//CHECKSTYLE:OFF
 public class ProfileModel {
     private final String profileId;
     private final String firstName;

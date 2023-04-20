@@ -149,4 +149,15 @@ public class ProfileDao {
         this.dynamoDbMapper.save( profileToAddEventTo);
         return eventsStoredAlready;
     }
+    public Set<String> removeEventFromProfile(String eventId, String profileId) {
+        if (profileId == null || profileId.isEmpty()) {
+            throw new InvalidAttributeException("The entered email address is invalid. Please try again.");
+        }
+        Profile profile = getProfile(profileId);
+        Set<String> events = profile.getEvents();
+        events.remove(eventId);
+        profile.setEvents(events);
+        this.dynamoDbMapper.save(profile);
+        return new HashSet<>(events);
+    }
 }
