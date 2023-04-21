@@ -214,7 +214,7 @@ color:white;
 }
 #banner{
   /* background: linear-gradient(rgba(0,0,0,0.5),#97DEFF), url(modified_landning_pic.png) ; */
-  background: linear-gradient(rgba(0,0,0,0.3),#c0d1da), url("css/images/modified_landning_pic.png");
+  background: linear-gradient(rgba(0,0,0,0.3),#c0d1da), url(images/modified_landning_pic.png);
   /* background: url(modified_landning_pic.png); */
   background-size: cover;
   background-position: center;

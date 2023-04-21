@@ -64,16 +64,16 @@ public class EventDao {
         return event;
     }
 
-    public List<String> getAllEventsInChronologicalOrder() {
+    public List<Event> getAllEventsInChronologicalOrder() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         List<Event> eventList = dynamoDbMapper.scan(Event.class, scanExpression);
 
-        List<String> eventInfoList = eventList.stream()
-                .map(e -> String.format("EventId: %s, Name: %s, DateTime: %s, Location: %s, CreatedBy: %s",
-                        e.getEventId(), e.getName(), e.getDateTime(), e.getAddress(), e.getEventCreator()))
-                .collect(Collectors.toList());
+//        List<String> eventInfoList = eventList.stream()
+//                .map(e -> String.format("EventId: %s, Name: %s, DateTime: %s, Location: %s, CreatedBy: %s",
+//                        e.getEventId(), e.getName(), e.getDateTime(), e.getAddress(), e.getEventCreator()))
+//                .collect(Collectors.toList());
 
-        return eventInfoList;
+        return eventList;
     }
 
     /**
