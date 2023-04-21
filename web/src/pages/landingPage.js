@@ -23,7 +23,7 @@ class LandingPage extends BindingClass {
             window.location.href= "/profile.html";
         }
         document.getElementById('logout').addEventListener('click', this.login);
-        document.getElementById('logout-2').addEventListener('click', this.login);
+//        document.getElementById('logout-2').addEventListener('click', this.login);
         document.getElementById('sign-up').addEventListener('click', this.login);
 
         // this.header.addHeaderToPage();
