@@ -17,10 +17,9 @@
 </head>
 <header class="header" id="header">
     <a href="#" class="logo">
-        <H1 class="logoDANNA text-center">@DANNA</H1>
+        <H1 class="logoDANNA text-center">Aventuras</H1>
     </a>
     <button  type="button" class="btn btn-light-custom" id="logout">Logout</button>
-    <span>!!!</span>
 </header>
 <body>
 <div class="container-fluid">
@@ -56,42 +55,64 @@
             </div>
         </div>
         <div class="col py-3 page-body-background">
-            <h3 class="text-center">Your Upcoming Events</h3>
+            <h3 class="text-center">All Events</h3>
+
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">EventId</th>
                     <th scope="col" class="text-center">Event Name</th>
                     <th scope="col" class="text-center">Date</th>
                     <th scope="col" class="text-center">Time</th>
-                    <th scope="col" class="text-center">Location</th>
+                    <th scope="col" class="text-center">Address</th>
                     <th scope="col" class="text-center">Organizer</th>
                     <th scope="col" class="text-center">RSVP</th>
+                    <th scope="col" class="text-center">Cancel RSVP</th>
                 </tr>
                 </thead>
-                <tbody id="event-list">
-                </tbody>
-            </table>
-<!--            <h3 class="text-center">Personal Events</h3>-->
-<!--            <table class="table table-bordered table-striped">-->
-<!--                <thead>-->
-<!--                <tr>-->
-                    <!-- <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">Event Name</th>
-                    <th scope="col" class="text-center">Date</th>
-                    <th scope="col" class="text-center">Time</th>
-                    <th scope="col" class="text-center">Location</th>
-                    <th scope="col" class="text-center">Organizer</th>
-                    <th scope="col" class="text-center">RSVP</th> -->
-                    <p id="personalEventResults"></p>
+                <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-success">I'm Going!</button>
+                    </td>
+                    <td><button type="button" class="btn btn-danger">Maybe Next Time</button>
+                    </td>
                 </tr>
-                </thead>
-                <tbody id="created-event-list">
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-success">I'm Going!</button>
+                    </td>
+                    <td><button type="button" class="btn btn-danger">Maybe Next Time.</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-success">I'm Going!</button>
+                    </td>
+                    <td><button type="button" class="btn btn-danger">Maybe Next Time</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
+
             <hr>
             <div class="row py-3">
-                <h3 class="text-center pb-5">Following</h3>
+
                 <div>
                     <p class="text-center" id="allFollowingListText"></p>
                     <div class="container d-flex flex-wrap justify-content-center" id="allFollowingList"></div>
