@@ -1,4 +1,4 @@
-/* Where to change site colors */
+/* Where to change site colors
 :root {
     --headerbarColor: #212524;
     --pageBackgroundColor:linear-gradient(-45deg, rgb(247, 195, 97),  rgb(242, 191, 53), rgb(243, 174, 71), rgb(238, 226, 199));
@@ -14,9 +14,7 @@
     align-items: center;
     padding: 10px;
 }
-/* body{
-    overflow:hidden;
-} */
+
 .page-body-background {
     background: var(--pageBackgroundColor);
 	background-size: 400% 400%;
@@ -147,9 +145,9 @@ color:white;
     color: var(--textColor);
 }
 
-/* mobile compatibility settings */
+/* mobile compatibility settings
 @media (max-width: 767px) {
-    /* Styles for smaller screens */
+    /* Styles for smaller screens
 
     .logo .logoDANNA {
         font-size: 1.5rem;
@@ -172,7 +170,7 @@ color:white;
         text-align: center;
     }
     .nav-item {
-        height: 20%; /* Adjust this value to change the height of the nav items */
+        height: 20%; /* Adjust this value to change the height of the nav items
     }
     .nav-link .nav-profile-icon {
         color: var(--textColor);
@@ -183,7 +181,7 @@ color:white;
         font-size: 1rem;
     }
     .col-auto {
-        max-width: 60px; /* Adjust this value to scale the nav bar width */
+        max-width: 60px; /* Adjust this value to scale the nav bar width
       }
 
     .nav-custom-icon {
@@ -201,27 +199,207 @@ color:white;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: calc(80vh - 40px); /* Adjust for any additional elements (e.g., padding) within the nav bar */
-      }
+        height: calc(80vh - 40px); /* Adjust for any additional elements (e.g., padding) within the nav bar }*/
+
+
+
+
+
+
+
+*{
+  margin:0;
+  padding:0;
+
+}
+#banner{
+  /* background: linear-gradient(rgba(0,0,0,0.5),#97DEFF), url(modified_landning_pic.png) ; */
+  background: linear-gradient(rgba(0,0,0,0.3),#c0d1da), url("css/images/modified_landning_pic.png");
+  /* background: url(modified_landning_pic.png); */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+.logoLanding{
+  width:140px;
+  position:absolute;
+  top:4%;
+  left:10%;
+  color: #FFF7E9;
+  font-size: 30px;
+  /* font-family: 'Dancing Script', cursive; */
+}
+.banner-text h1{
+  text-align:left;
+  color:#FFF7E9;
+  padding-top:450px;
+  padding-left:10%;
+  font-size:45px;
+  font-family: 'Dancing Script', cursive;
+}
+
+
+.button-container {
+display: flex;
+justify-content: flex-start;
+padding-left: 10%;
+align-items: center;
+}
+
+
+.button-container button + button {
+  margin-left: 35px;
+}
+.button-container button {
+  background-color: #FD8A8A;
+  color: #faf8f3;
+  font-size: 25px;
+  padding: 6px 35px;
+  font-family: 'Dancing Script', cursive;
+  border-radius: 20px;
+  width: 150px;
+}
+
+.button-container button:hover {
+  background-color: #EAE0DA;
+  color: #00337C;
+  border-color: #FFF7E9;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+
+}
+.navbar a {
+  text-decoration: none;
+  color: #FFF7E9;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  font-size: 25px;
+  margin: 0 25px;
+  padding-top: 5% ;
+  font-family: 'Dancing Script', cursive;
+
+}
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.6; }
+.about{
+text-align: center;
+font-size: 25px;
+}
+
+.text-right {
+  text-align: right; }
+
+.text-left {
+  text-align: left; }
+
+.text-center {
+  text-align: center; }
+
+.section-class {
+  padding: 80px 0;
+}
+  .section-class h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-bottom: 60px; }
+
+.section-class-item {
+  padding-left: 10%;
+  margin-bottom: 30px; }
+  .section-class-item .icon-wrap {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    background-color: tomato;
+    display: inline-block;
+    border-radius: 10em;
+    font-size: 20px;
+    color: #fff; }
+  .section-class-item h3 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: bold; }
+  .section-class-item p {
+    color: #6f6f6f; }
+
+.items-right .item-icon {
+  padding-left: 20px; }
+
+.items-right,
+.items-left {
+  margin-top: 30px; }
+
+.item-text,
+.item-icon {
+  display: table-cell;
+  vertical-align: top; }
+
+.items-left .item-icon {
+  padding-right: 20px;
+}
+
+  .section-class-image img {
+    float: center;
+    margin-right: 5%;
+  }
+
+  th {
+    padding: 27px;
+     /* adjust the value to increase or decrease the spacing */
+  }
+
+  .uniqueSellingPoints{
+    text-align: center;
+    font-size: 17px;
+    padding-left: 10%;
+  }
+
+  ul{
+    text-align: left;
+    padding-top: 0%;
+  }
+
+  .uniqueSellingPoints td{
+    padding: 45px;
 
   }
 
-/* animation settings */
-@keyframes gradient {
-    0% {
-        background-position: 0% 25%;
-    }
-    25% {
-        background-position: 25% 50%;
-    }
-    50% {
-        background-position: 50% 100%;
-    }
-    75% {
-        background-position: 25% 50%;
-    }
-    100% {
-        background-position: 25% 0%;
-    }
+  .whytochooseus {
+    text-align: center;
+    font-size: 23px;
 
-}
+  }
+
+  footer {
+    background-color: #f2f2f2;
+    color: #777;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  h2{
+    font-size: 30px;
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+  }
+
