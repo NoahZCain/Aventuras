@@ -3,6 +3,7 @@ package com.nashss.se.musicplaylistservice.activity;
 import com.nashss.se.musicplaylistservice.activity.requests.GetAllEventsRequest;
 import com.nashss.se.musicplaylistservice.activity.results.GetAllEventsResult;
 import com.nashss.se.musicplaylistservice.dynamodb.EventDao;
+import com.nashss.se.musicplaylistservice.dynamodb.models.Event;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,7 @@ public class GetAllEventsActivity {
     public GetAllEventsResult handleRequest(final GetAllEventsRequest getAllEventsRequest){
         log.info("Receive GetAllEventsRequest {} ", getAllEventsRequest);
 
-        List<String> listEvents = eventDao.getAllEventsInChronologicalOrder();
+        List<Event> listEvents = eventDao.getAllEventsInChronologicalOrder();
 
         return GetAllEventsResult.builder()
                 .withEventList(listEvents)
