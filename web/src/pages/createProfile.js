@@ -32,7 +32,7 @@ class CreateProfile extends BindingClass {
     }
 
     mount() {
-  
+
         document.getElementById('profilePic').addEventListener('click', this.redirectEditProfile);
         document.getElementById('allEvents').addEventListener('click', this.redirectAllEvents);
         document.getElementById('createEvents').addEventListener('click', this.redirectCreateEvents);
@@ -42,7 +42,7 @@ class CreateProfile extends BindingClass {
         document.getElementById('confirm').addEventListener('click', this.confirmRedirect);
         document.getElementById('submited').addEventListener('click', this.submitFormData);
 
-      
+        // this.header.addHeaderToPage();
 
         this.client = new dannaClient();
         this.clientLoaded();
@@ -90,7 +90,7 @@ class CreateProfile extends BindingClass {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
             });
         }
-        
+
 
         this.dataStore.set('profile', profile);
         document.getElementById('fnameC').innerText = firstName || profile.profileModel.firstName;
@@ -99,7 +99,7 @@ class CreateProfile extends BindingClass {
         document.getElementById('loC').innerText = location || profile.profileModel.location;
         document.getElementById('genderC').innerText = gender ||profile.profileModel.gender;
         document.getElementById('loading-modal').remove();
-        
+
     }
     confirmRedirect() {
         window.location.href = '/profile.html';
