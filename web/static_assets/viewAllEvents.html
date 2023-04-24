@@ -18,7 +18,6 @@
 </head>
 <header class="header" id="header">
     <H1 class="logoDANNA text-center">AVENTURAS</H1>
-
     <button  type="button" class="btn btn-light-custom" id="logout">Logout</button>
 </header>
 <body>
@@ -59,12 +58,9 @@
             </div>
         </div>
         <div class="col py-3 page-body-background">
-
-            <h3 class="text-center">All Events</h3>
-
-            <table class="table table-bordered table-striped">
+            <h3 class="text-center">All Upcoming Events</h3>
+            <table class="table table-bordered table-striped" id="Toptable">
                 <thead>
-
                 <tr>
                     <th scope="col" class="text-center">Event ID</th>
                     <th scope="col" class="text-center">Event Name</th>
@@ -72,57 +68,11 @@
                     <th scope="col" class="text-center">Address</th>
                     <th scope="col" class="text-center">Organizer</th>
                     <th scope="col" class="text-center">Category</th>
-
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <th scope="row"></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-success">I'm Going!</button>
-                    </td>
-                    <td><button type="button" class="btn btn-danger">Maybe Next Time</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-success">I'm Going!</button>
-                    </td>
-                    <td><button type="button" class="btn btn-danger">Maybe Next Time.</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-success">I'm Going!</button>
-                    </td>
-                    <td><button type="button" class="btn btn-danger">Maybe Next Time</button>
-                    </td>
-                </tr>
+                <tbody id="event-list">
                 </tbody>
             </table>
-
-            <hr>
-            <div class="row py-3">
-
-                <div>
-                    <p class="text-center" id="allFollowingListText"></p>
-                    <div class="container d-flex flex-wrap justify-content-center" id="allFollowingList"></div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
