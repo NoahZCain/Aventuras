@@ -71,34 +71,6 @@ class ViewProfile extends BindingClass {
         throw new Error(`Failed to get profile for ID ${result} after ${maxRetries} retries.`);
     }
 
-//  displayEvents(){
-//            const events = this.dataStore.get("events");
-//            console.log(events , "from displayEvents");
-//            if (events == null) {
-//                document.getElementById("event-list").innerText = "No Events found";
-//            }
-//            document.getElementById("event-list").innerHTML = this.getHTMLForSearchResults(events);
-//    }
-//
-//    getHTMLForSearchResults(searchResults) {
-//     console.log(searchResults , "from getHTMLForSearchResults");
-//            if (!searchResults || !searchResults.allEventList || searchResults.allEventList.length === 0) {
-//                return '<h4>No results found</h4>';
-//            }
-//
-//            let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
-//            for (const res of searchResults.allEventList) {
-//                html += `
-//                <tr>
-//                    <td>
-//                        <a href="playlist.html?id=${res.name}">${res.name}</a>
-//                    </td>
-//                </tr>`;
-//            }
-//            html += '</table>';
-//
-//            return html;
-//        }
 
     async addEvents(){
         const events = this.dataStore.get("events");
@@ -108,17 +80,27 @@ class ViewProfile extends BindingClass {
         } else {
             let eventResult;
             let counter = 0;
-    let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+    let html = "";
     for (let event of events) {
                               html += `
                               <tr>
                                   <td>
-                                      ${event.name}
+                                      ${event.eventId}
                                   </td>
+                                   <td>
+                                  ${event.name}
+                                  </td>
+                                  <td>
+                               ${event.dateTime}
+                              </td> <td>
+                              ${event.address}
+                               </td> <td>
+                              ${event.eventCreator}
+                              </td>
                               </tr>`;
 
                             }
-                  html += '</table>';
+
                 document.getElementById('event-list').innerHTML=html;
      }
 
@@ -138,17 +120,28 @@ class ViewProfile extends BindingClass {
                } else {
                    let eventResult;
                    let counter = 0;
-           let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+           let html = "";
            for (let event of events.filter(e => myPersonalEventIds.some(o => o === e.eventId))) {
                                      html += `
                                      <tr>
-                                         <td>
-                                             ${event.name}
-                                         </td>
-                                     </tr>`;
+                                         <tr>
+                                      <td>
+                                       ${event.eventId}
+                                                                           </td>
+                                                                            <td>
+                                                                           ${event.name}
+                                                                           </td>
+                                                                           <td>
+                                                                        ${event.dateTime}
+                                                                       </td> <td>
+                                                                       ${event.address}
+                                                                        </td> <td>
+                                                                       ${event.eventCreator}
+                                                                       </td>
+                                                                       </tr>`;
 
                                    }
-                         html += '</table>';
+
                        document.getElementById('created-event-list').innerHTML=html;
             }
   }
