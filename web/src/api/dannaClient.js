@@ -214,28 +214,27 @@ export default class DannaClient extends BindingClass {
      * @param  errorCallback 
      * @returns the event
      */
-    async createEvent(name, date, time, address, category, description, errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can create an event.");
-            const response = await this.axiosClient.post(`events/create`, {
-                name: name,
-                date: date,
-                time: time,
-                address: address,
-                category: category,
-                description: description
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-
-                }
-            });
-            return response.data;
-        } catch (error) {
-            this.handleError(error, errorCallback)
+    async createEvent(name, eventCreator, address, description, dateTime, category, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can create an event.");
+                const response = await this.axiosClient.post(`events/create`, {
+                    name: name,
+                    eventCreator: eventCreator,
+                    address: address,
+                    description: description,
+                    dateTime: dateTime,
+                    category: category
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                return response.data;
+            } catch (error) {
+                this.handleError(error, errorCallback);
+            }
         }
-    }
 
       /**
      * 

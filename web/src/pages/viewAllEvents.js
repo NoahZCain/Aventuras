@@ -68,21 +68,31 @@ class ViewAllEvents extends BindingClass {
             if (!searchResults || !searchResults.allEventList || searchResults.allEventList.length === 0) {
                 return '<h4>No results found</h4>';
             }
-            let html = '<table><tr><th>Event ID</th><th>Event Name</th><th>Date & Time</th><th>Event Category</th><th>Address</th><th>Organizer</th></tr>';
+            let html = "";
             for (const res of searchResults.allEventList) {
                 html += `
                 <tr>
+                <td>
+                  ${res.eventId}
+                 </td>
+                 <td>
+                 ${res.name}
+                  </td>
+                  <td>
+                  ${res.dateTime}
+                   </td>
                     <td>
-//                        <a href="playlist.html?id=${res.name}">${res.name}</a>
-                        ${res.eventId}
-                    </td>
-                     <td>
-                    //                        <a href="playlist.html?id=${res.name}">${res.name}</a>
-                    ${res.name}
-                     </td>
+                  ${res.address}
+                  </td>
+                  <td>
+                 ${res.eventCreator}
+                 </td>
+                  <td>
+                 ${res.category}
+                 </td>
                 </tr>`;
             }
-            html += '</table>';
+
 
             return html;
         }

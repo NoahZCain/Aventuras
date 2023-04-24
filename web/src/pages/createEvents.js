@@ -24,6 +24,7 @@ class CreateEventSimple extends BindingClass {
         document.getElementById('allEvents').addEventListener('click', this.redirectAllEvents);
         document.getElementById('createEvents').addEventListener('click', this.redirectCreateEvents);
         document.getElementById('allFollowing').addEventListener('click', this.redirectAllFollowing);
+
         document.getElementById('logout').addEventListener('click', this.logout);
         document.getElementById('door').addEventListener('click', this.logout);
         document.getElementById('createEvent').addEventListener('click', this.submit);
@@ -57,7 +58,7 @@ class CreateEventSimple extends BindingClass {
                     errorMessageDisplay.classList.remove('hidden');
                 });
                 console.log(eventName,eventCreator, eventDate, eventAddress, eventDescription, eventCategory);
-         window.location.href ='/landingPage.html';
+         window.location.href ='/viewAllEvents.html';
         } catch (error) {
             createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
