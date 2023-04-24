@@ -1,8 +1,13 @@
+import dannaClient from '../api/dannaClient';
+import BindingClass from "../util/bindingClass";
+import Header from '../components/dannaHeader';
+import DataStore from "../util/DataStore";
+
 class ViewAllEvents extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['clientLoaded', 'mount','thisPageRemoveFrom','redirectEditProfile','redirectAllEvents',
-        'redirectCreateEvents','redirectAllFollowing','logout','displayEvents','getHTMLForSearchResults','addPersonalEvents','addName','addFollowing'], this);
+                'redirectCreateEvents','redirectAllFollowing','logout','displayEvents','getHTMLForSearchResults','addPersonalEvents','addName','addFollowing'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayEvents);
         this.header = new Header(this.dataStore);
@@ -21,22 +26,26 @@ class ViewAllEvents extends BindingClass {
         this.dataStore.set('events', events);
         this.dataStore.set('firstName', profile.profileModel.firstName);
         this.dataStore.set('lastName', profile.profileModel.lastName);
-        this.dataStore.set('following', profile.profileModel.following);
-
+//        this.dataStore.set('following', profile.profileModel.following);
+        this.addName();
+        this.displayEvents();
         console.log(events);
 
     }
+
+
+
     /**
      * Add the header to the page and load the dannaClient.
      */
     mount() {
-        document.getElementById('profilePic').addEventListener('click', this.redirectEditProfile);
+//        document.getElementById('profilePic').addEventListener('click', this.redirectEditProfile);
         document.getElementById('allEvents').addEventListener('click', this.redirectAllEvents);
         document.getElementById('createEvents').addEventListener('click', this.redirectCreateEvents);
         document.getElementById('allFollowing').addEventListener('click', this.redirectAllFollowing);
         document.getElementById('logout').addEventListener('click', this.logout);
         document.getElementById('door').addEventListener('click', this.logout);
-        document.getElementById('names').innerText = "Loading Profile ...";
+        document.getElementById('names').innerText = "Loading ...";
         this.client = new dannaClient();
         this.clientLoaded();
     }
@@ -59,14 +68,18 @@ class ViewAllEvents extends BindingClass {
             if (!searchResults || !searchResults.allEventList || searchResults.allEventList.length === 0) {
                 return '<h4>No results found</h4>';
             }
-
-            let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+            let html = '<table><tr><th>Event ID</th><th>Event Name</th><th>Date & Time</th><th>Event Category</th><th>Address</th><th>Organizer</th></tr>';
             for (const res of searchResults.allEventList) {
                 html += `
                 <tr>
                     <td>
-                        <a href="playlist.html?id=${res.name}">${res.name}</a>
+//                        <a href="playlist.html?id=${res.name}">${res.name}</a>
+                        ${res.eventId}
                     </td>
+                     <td>
+                    //                        <a href="playlist.html?id=${res.name}">${res.name}</a>
+                    ${res.name}
+                     </td>
                 </tr>`;
             }
             html += '</table>';
@@ -160,8 +173,8 @@ class ViewAllEvents extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const viewProfile = new ViewProfile();
-    viewProfile.mount();
+    const viewAllEvents = new ViewAllEvents();
+    viewAllEvents.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

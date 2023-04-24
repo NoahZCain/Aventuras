@@ -17,11 +17,14 @@ class ViewProfile extends BindingClass {
         const identity = await this.client.getIdentity();
         const profile = await this.client.getProfile(identity.email);
         this.dataStore.set("email", identity.email);
+        this.dataStore.set("myPersonalEventIds", profile.profileModel.events);
         this.dataStore.set('profile', profile);
-        this.dataStore.set('events', profile.profileModel.events);
+        const events = await this.client.getAllEvents();
+        this.dataStore.set('events', events.allEventList);
         this.dataStore.set('firstName', profile.profileModel.firstName);
         this.dataStore.set('lastName', profile.profileModel.lastName);
         this.dataStore.set('following', profile.profileModel.following);
+        console.log(JSON.stringify(this.dataStore));
         this.addEvents();
         this.addPersonalEvents();
         this.addName();
@@ -68,78 +71,57 @@ class ViewProfile extends BindingClass {
         throw new Error(`Failed to get profile for ID ${result} after ${maxRetries} retries.`);
     }
 
-
+//  displayEvents(){
+//            const events = this.dataStore.get("events");
+//            console.log(events , "from displayEvents");
+//            if (events == null) {
+//                document.getElementById("event-list").innerText = "No Events found";
+//            }
+//            document.getElementById("event-list").innerHTML = this.getHTMLForSearchResults(events);
+//    }
+//
+//    getHTMLForSearchResults(searchResults) {
+//     console.log(searchResults , "from getHTMLForSearchResults");
+//            if (!searchResults || !searchResults.allEventList || searchResults.allEventList.length === 0) {
+//                return '<h4>No results found</h4>';
+//            }
+//
+//            let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+//            for (const res of searchResults.allEventList) {
+//                html += `
+//                <tr>
+//                    <td>
+//                        <a href="playlist.html?id=${res.name}">${res.name}</a>
+//                    </td>
+//                </tr>`;
+//            }
+//            html += '</table>';
+//
+//            return html;
+//        }
 
     async addEvents(){
         const events = this.dataStore.get("events");
+        console.log("AddEvents", events);
         if (events == null) {
             document.getElementById("event-list").innerText = "There are no events yet under your profile.";
         } else {
             let eventResult;
             let counter = 0;
-            for (eventResult of events) {
-                const resulting =  await this.getEventWithRetry(eventResult);
-                counter += 1
-                const anchor = document.createElement('tr');
-                const th = document.createElement('th');
-                th.setAttribute("scope", "row");
-                th.innerText = counter;
-                const eventId = document.createElement('td');
-                eventId.innerText = eventResult;
-                const eventName = document.createElement('td');
-                eventName.innerText = resulting.eventModel.name;
-                const rawDate = resulting.eventModel.dateTime;
-                try {
-                    const inputStringDate = new Date(rawDate.split("[")[0]);
+    let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+    for (let event of events) {
+                              html += `
+                              <tr>
+                                  <td>
+                                      ${event.name}
+                                  </td>
+                              </tr>`;
 
-                    if (isNaN(inputStringDate.getTime())) {
-                        throw new Error("Invalid Date");
-                    }
+                            }
+                  html += '</table>';
+                document.getElementById('event-list').innerHTML=html;
+     }
 
-                    const dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                    const timeFormatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-                    const date = dateFormatter.format(inputStringDate);
-                    const time = timeFormatter.format(inputStringDate);
-                    const eventDate = document.createElement('td');
-                    eventDate.innerText = date;
-                    const eventTime = document.createElement('td');
-                    eventTime.innerText = time;
-                    const eventLocation = document.createElement('td');
-                    eventLocation.innerText = resulting.eventModel.eventAddress;
-                    const eventOrg = document.createElement('td');
-                    const foriegnProfile = resulting.eventModel.eventCreator;
-                    const realName = await this.client.getProfile(foriegnProfile);
-                    eventOrg.innerText = realName.profileModel.firstName + " "+ realName.profileModel.lastName;
-                    const eventCancel = document.createElement('td');
-                    // eventCancel.innerText = "NEED button to cancel here";
-                    const removeBtn = document.createElement('button');
-                    removeBtn.innerText = "Cancel";
-                    removeBtn.className= "btn btn-dark";
-                    removeBtn.id = eventResult + "btn";
-                    removeBtn.addEventListener('click', (function(result) {
-                        return function() {
-                            this.thisPageRemoveFrom(result);
-                        };
-                        })(eventResult).bind(this));
-                        removeBtn.id = eventResult + "btn";
-                    eventCancel.appendChild(removeBtn);
-                    anchor.appendChild(th);
-                    anchor.appendChild(eventId);
-                    anchor.appendChild(eventName);
-                    anchor.appendChild(eventDate);
-                    anchor.appendChild(eventTime);
-                    anchor.appendChild(eventLocation);
-                    anchor.appendChild(eventOrg);
-                    anchor.appendChild(eventCancel);
-                    document.getElementById("event-list").appendChild(anchor);
-
-                } catch (error) {
-                    console.error("Error adding events");
-                }
-
-
-            }
-        }
     }
 
     async thisPageRemoveFrom(result){
@@ -148,82 +130,30 @@ class ViewProfile extends BindingClass {
     }
 
     async addPersonalEvents(){
-        let checkArray = [];
-        const events = this.dataStore.get("events");
-        if (events == null) {
-            document.getElementById("created-event-list").innerText = "There are no events under your profile that were created by you.";
-        } else {
-            let eventResult;
-            let counter = 0;
-            for (eventResult of events) {
-                const resulting = await this.client.getEventDetails(eventResult);
-                if(resulting){
-                    if( resulting.eventModel.eventCreator == this.dataStore.get('email')){
-                        counter += 1
-                        checkArray.push(eventResult);
-                        const anchor = document.createElement('tr');
-                        const th = document.createElement('th');
-                        th.setAttribute("scope", "row");
-                        th.innerText = counter;
-                        const eventName = document.createElement('td');
-                        eventName.innerText = eventResult;
-                        const rawDate = resulting.eventModel.dateTime;
-                        try {
-                            const inputStringDate = new Date(rawDate.split("[")[0]);
+          const events = this.dataStore.get("events");
+          const myPersonalEventIds = this.dataStore.get("myPersonalEventIds");
+               console.log("AddEvents", events);
+               if (events == null) {
+                   document.getElementById("event-list").innerText = "There are no events yet under your profile.";
+               } else {
+                   let eventResult;
+                   let counter = 0;
+           let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+           for (let event of events.filter(e => myPersonalEventIds.some(o => o === e.eventId))) {
+                                     html += `
+                                     <tr>
+                                         <td>
+                                             ${event.name}
+                                         </td>
+                                     </tr>`;
 
-                            if (isNaN(inputStringDate.getTime())) {
-                                throw new Error("Invalid Date");
-                            }
-
-                            const dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                            const timeFormatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-                            const date = dateFormatter.format(inputStringDate);
-                            const time = timeFormatter.format(inputStringDate);
-                            const eventDate = document.createElement('td');
-                            eventDate.innerText = date;
-                            const eventTime = document.createElement('td');
-                            eventTime.innerText = time;
-                            const eventLocation = document.createElement('td');
-                            eventLocation.innerText = resulting.eventModel.eventAddress;
-                            const eventOrg = document.createElement('td');
-                            const foriegnProfile = resulting.eventModel.eventCreator;
-                            const realName = await this.client.getProfile(foriegnProfile);
-                            eventOrg.innerText = realName.profileModel.firstName + " "+ realName.profileModel.lastName;
-                            const eventCancel = document.createElement('td');
-                            // eventCancel.innerText = "NEED button to cancel here";
-                            const removeBtn = document.createElement('button');
-                            removeBtn.innerText = "Cancel";
-                            removeBtn.className= "btn btn-dark";
-                            removeBtn.id = eventResult + "btn";
-                            removeBtn.addEventListener('click', (function(result) {
-                                return function() {
-                                this.thisPageRemoveFrom(result);
-                                };
-                            })(eventResult).bind(this));
-                            removeBtn.id = eventResult + "btn";
-                            eventCancel.appendChild(removeBtn);
-                            anchor.appendChild(th);
-                            anchor.appendChild(eventName);
-                            anchor.appendChild(eventDate);
-                            anchor.appendChild(eventTime);
-                            anchor.appendChild(eventLocation);
-                            anchor.appendChild(eventOrg);
-                            anchor.appendChild(eventCancel);
-                            document.getElementById("event-list").appendChild(anchor);
-
-                        } catch (error) {
-                            console.error("Error adding events");
-                        }
-                    }
-                }
-
+                                   }
+                         html += '</table>';
+                       document.getElementById('created-event-list').innerHTML=html;
             }
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("personalEventResults").remove();
-              });
-                }
+  }
 
-    }
+
 
     async addName(){
         const fname = this.dataStore.get("firstName");
