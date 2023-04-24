@@ -307,4 +307,4 @@ const main = async () => {
     viewProfile.mount();
 };
 
-window.addEventListener('DOMContentLoaded', main);
+window.addEventListener('DOMContentLoaded', main)
