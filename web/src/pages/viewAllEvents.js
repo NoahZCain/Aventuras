@@ -92,8 +92,6 @@ class ViewAllEvents extends BindingClass {
                  </td>
                 </tr>`;
             }
-
-
             return html;
         }
 

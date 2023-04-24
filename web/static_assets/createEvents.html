@@ -5,14 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-control" content="public">
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
     <script type="text/javascript" src="assets/createEvents.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/MidstoneStyle.css">
-    <link rel="shortcut icon" href="icons/balloon-heart.svg">
+
+    <link rel="shortcut icon" href="icons/daisy-flower-icon.svg">
     <title>Aventuras</title>
 </head>
 <header class="header" id="header">
@@ -28,6 +35,7 @@
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
+
                         <a href="#" class="nav-link align-middle px-0" id="profilePic">
                             <i class="bi bi-person-circle nav-profile-icon"></i>
                             <span class="ms-1 d-none d-sm-inline"><H3 class="names" id="names">First& LastName</H3></span>
@@ -49,6 +57,7 @@
                         <a href="#" class="nav-link px-4 py-4 align-middle"id="door">
                             <i class="bi bi-door-open px-4 nav-custom-icon"></i><span class="tooltip">Logout</span></a>
                     </li>
+
                 </ul>
                 <hr>
             </div>
@@ -63,6 +72,7 @@
                         <div class="valid-feedback">
                             Looks good!
                         </div>
+
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom02">Description</label>
@@ -80,6 +90,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
@@ -89,6 +100,7 @@
                             Please provide a valid address.
                         </div>
                     </div>
+
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom04">Category</label>
                         <input type="text" class="form-control" id="eventCategoryC" placeholder="Category" required>
@@ -102,6 +114,7 @@
                         </label>
                         <div id="errorMessageDisplay" class="hidden"></div>
                     </div>
+
                 </div>
                 <button class="btn btn-primary" type="submit" id ="createEvent">Create Event</button>
             </form>
