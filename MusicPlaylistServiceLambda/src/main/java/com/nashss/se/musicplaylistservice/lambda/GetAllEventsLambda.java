@@ -20,7 +20,8 @@ public class GetAllEventsLambda extends LambdaActivityRunner<GetAllEventsRequest
         System.out.println("in handle request");
         return super.runActivity(
                 () -> input.fromPath(path ->
-                        GetAllEventsRequest.builder().build()),
+                        GetAllEventsRequest.builder()
+                                .build()),
                 (request, serviceComponent) ->
                         serviceComponent.provideGetAllEventsActivity().handleRequest());
     }

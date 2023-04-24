@@ -84,6 +84,7 @@ export default class DannaClient extends BindingClass {
      */
     async getProfile(id, errorCallback) {
         try {
+        console.log(id + " id");
             const token = await this.getTokenOrThrow("Only authenticated users can view a profile.");
             const response = await this.axiosClient.get(`profiles/${id}`, {
                 headers: {
