@@ -19,8 +19,8 @@ public class GetAllEventsActivity {
         this.eventDao = eventDao;
     }
 
-    public GetAllEventsResult handleRequest(final GetAllEventsRequest getAllEventsRequest){
-        log.info("Receive GetAllEventsRequest {} ", getAllEventsRequest);
+    public GetAllEventsResult handleRequest(){
+        log.info("Receive GetAllEventsRequest {} ", "called Get All Events");
 
         List<Event> listEvents = eventDao.getAllEventsInChronologicalOrder();
 

@@ -371,11 +371,12 @@ export default class DannaClient extends BindingClass {
 
         const errorFromApi = error?.response?.data?.error_message;
         if (errorFromApi) {
-            console.error(errorFromApi)
+            console.error("errorFromApi " + errorFromApi)
             error.message = errorFromApi;
         }
 
         if (errorCallback) {
+        console.error("errorCallback " + errorCallback)
             errorCallback(error);
         }
     }

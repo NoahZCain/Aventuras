@@ -8,10 +8,9 @@ import java.util.List;
 public class GetAllEventsResult {
     private final List<Event> allEventList;
 
-    private GetAllEventsResult(List <Event> allEventList) {
+    private GetAllEventsResult(List<Event> allEventList) {
         this.allEventList = allEventList;
     }
-
 
     public List<Event> getAllEventList() {
         return allEventList;
@@ -33,6 +32,7 @@ public class GetAllEventsResult {
         private List<Event> allEventList;
 
         public Builder withEventList(List<Event> allEventList) {
+
             this.allEventList = new ArrayList<>(allEventList);
             return this;
         }
