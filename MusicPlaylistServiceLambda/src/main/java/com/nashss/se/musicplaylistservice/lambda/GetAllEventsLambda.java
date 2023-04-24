@@ -17,16 +17,11 @@ public class GetAllEventsLambda extends LambdaActivityRunner<GetAllEventsRequest
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetAllEventsRequest> input, Context context) {
+        System.out.println("in handle request");
         return super.runActivity(
                 () -> input.fromPath(path ->
-                        GetAllEventsRequest.builder()
-//                                .withId(path.get("id"))
-//                                .withName(path.get("name"))
-//                                .withAddress(path.get("address"))
-//                                .withEventCreator(path.get("eventCreator"))
-//                                .withDateTime(path.get("dateTime"))
-                                .build()),
+                        GetAllEventsRequest.builder().build()),
                 (request, serviceComponent) ->
-                        serviceComponent.provideGetAllEventsActivity().handleRequest(request));
+                        serviceComponent.provideGetAllEventsActivity().handleRequest());
     }
 }

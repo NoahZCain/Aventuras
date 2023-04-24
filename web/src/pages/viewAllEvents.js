@@ -6,28 +6,19 @@ class ViewAllEvents extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayEvents);
         this.header = new Header(this.dataStore);
-        // console.log("viewprofile constructor");
+
     }
 
     /**
      * Once the client is loaded, get the profile metadata.
      */
     async clientLoaded() {
-        // const urlParams = new URLSearchParams(window.location.search);
         const identity = await this.client.getIdentity();
         const profile = await this.client.getProfile(identity.email);
         this.dataStore.set('profile', profile);
         const events = await this.client.getAllEvents();
         this.dataStore.set('events', events);
         console.log(events);
-//        this.dataStore.set('firstName', profile.profileModel.firstName);
-//        this.dataStore.set('lastName', profile.profileModel.lastName);
-//        this.dataStore.set('following', profile.profileModel.following);
-//        this.addEvents();
-//        this.addPersonalEvents();
-//        this.addName();
-//        this.addFollowing();
-
 
     }
     /**
@@ -41,83 +32,9 @@ class ViewAllEvents extends BindingClass {
         document.getElementById('logout').addEventListener('click', this.logout);
         document.getElementById('door').addEventListener('click', this.logout);
         document.getElementById('names').innerText = "Loading Profile ...";
-        document.getElementById('personalEventResults').innerText = "Loading Personal Events...";
-        document.getElementById("allFollowingListText").innerText = "Loading People You Follow...";
-        //this.header.addHeaderToPage();
-
         this.client = new dannaClient();
         this.clientLoaded();
     }
-
-//    async addEvents(){
-//        const events = this.dataStore.get("events");
-//        if (events == null) {
-//            document.getElementById("event-list").innerText = "No Events added in your Profile";
-//        } else {
-//            let eventResult;
-//            let counter = 0;
-//            for (eventResult of events) {
-//                const resulting = await this.client.getEventDetails(eventResult);
-//                counter += 1
-//                const anchor = document.createElement('tr');
-//                const th = document.createElement('th');
-//                th.setAttribute("scope", "row");
-//                th.innerText = counter;
-//                const eventName = document.createElement('td');
-//                eventName.innerText = eventResult;
-//                const rawDate = resulting.eventModel.dateTime;
-//                try {
-//                    const inputStringDate = new Date(rawDate.split("[")[0]);
-//
-//                    if (isNaN(inputStringDate.getTime())) {
-//                        throw new Error('Invalid date value');
-//                    }
-//
-//                    const dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-//                    const timeFormatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-//                    const date = dateFormatter.format(inputStringDate);
-//                    const time = timeFormatter.format(inputStringDate);
-//                    const eventDate = document.createElement('td');
-//                    eventDate.innerText = date;
-//                    const eventTime = document.createElement('td');
-//                    eventTime.innerText = time;
-//                    const eventLocation = document.createElement('td');
-//                    eventLocation.innerText = resulting.eventModel.eventAddress;
-//                    const eventOrg = document.createElement('td');
-//                    const foriegnProfile = resulting.eventModel.eventCreator;
-//                    const realName = await this.client.getProfile(foriegnProfile);
-//                    eventOrg.innerText = realName.profileModel.firstName + " "+ realName.profileModel.lastName;
-//                    const eventCancel = document.createElement('td');
-//                    // eventCancel.innerText = "NEED button to cancel here";
-//                    const removeBtn = document.createElement('button');
-//                    removeBtn.innerText = "Cancel";
-//                    removeBtn.className= "btn btn-dark";
-//                    removeBtn.id = eventResult + "btn";
-//                    removeBtn.addEventListener('click', (function(result) {
-//                        return function() {
-//                          this.thisPageRemoveFrom(result);
-//                        };
-//                      })(eventResult).bind(this));
-//                      removeBtn.id = eventResult + "btn";
-//                    eventCancel.appendChild(removeBtn);
-//                    anchor.appendChild(th);
-//                    anchor.appendChild(eventName);
-//                    anchor.appendChild(eventDate);
-//                    anchor.appendChild(eventTime);
-//                    anchor.appendChild(eventLocation);
-//                    anchor.appendChild(eventOrg);
-//                    anchor.appendChild(eventCancel);
-//                    document.getElementById("event-list").appendChild(anchor);
-//
-//                } catch (error) {
-//                    console.error("Error adding events");
-//                }
-//
-//
-//            }
-//        }
-//    }
-
 
     async thisPageRemoveFrom(result){
         this.client.removeEventFromProfile(result);
@@ -125,7 +42,6 @@ class ViewAllEvents extends BindingClass {
 
     displayEvents(){
             const events = this.dataStore.get("events");
-
             console.log(events , "from displayEvents");
             if (events == null) {
                 document.getElementById("event-list").innerText = "No Events found";
