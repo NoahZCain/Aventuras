@@ -15,9 +15,14 @@ class ViewAllEvents extends BindingClass {
     async clientLoaded() {
         const identity = await this.client.getIdentity();
         const profile = await this.client.getProfile(identity.email);
-        this.dataStore.set('profile', profile);
         const events = await this.client.getAllEvents();
+        this.dataStore.set("email", identity.email);
+        this.dataStore.set('profile', profile);
         this.dataStore.set('events', events);
+        this.dataStore.set('firstName', profile.profileModel.firstName);
+        this.dataStore.set('lastName', profile.profileModel.lastName);
+        this.dataStore.set('following', profile.profileModel.following);
+
         console.log(events);
 
     }
