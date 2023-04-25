@@ -4,9 +4,7 @@
 
 }
 #banner{
-  /* background: linear-gradient(rgba(0,0,0,0.5),#97DEFF), url(modified_landning_pic.png) ; */
   background: linear-gradient(rgba(0,0,0,0.3),#c0d1da), url(images/modified_landning_pic.png);
-  /* background: url(modified_landning_pic.png); */
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -18,7 +16,6 @@
   left:10%;
   color: #FFF7E9;
   font-size: 30px;
-  /* font-family: 'Dancing Script', cursive; */
 }
 .banner-text h1{
   text-align:left;
@@ -84,6 +81,11 @@ align-items: center;
   font-family: 'Dancing Script', cursive;
 
 }
+
+.text-following {
+  color: black;
+}
+
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
@@ -196,11 +198,6 @@ font-size: 25px;
 
 
 
-
-
-
-
-
 /* Header styles */
 .header {
   background-color: #FC466B;
@@ -239,6 +236,7 @@ font-size: 25px;
 .bg-dark {
   background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%); !important;
   height: 100vh;
+
 }
 
 .nav-pills .nav-link {
@@ -262,15 +260,6 @@ font-size: 25px;
   transition: all 0.3s ease-in-out;
   pointer-events: none;
 }
-
-/*
-.nav-pills .nav-link:hover .tooltip {
-  opacity: 1;
-  top: 60px;
-
-}
-*/
-
 
 .names {
   margin: 0;
@@ -343,7 +332,28 @@ font-size: 25px;
 }
 
 
+/* create an event form */
 
+/* Make all form fields the same length */
+.form-control {
+  width: 100%;
+}
+
+/* Style the form labels */
+label {
+  font-weight: bold;
+}
+
+/* Add margin to the form rows */
+.form-row {
+  margin-bottom: 1rem;
+}
+
+
+/* Style the create event button */
+#createEvent {
+  margin-top: 1rem;
+}
 
 
 

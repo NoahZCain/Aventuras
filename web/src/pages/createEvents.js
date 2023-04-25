@@ -8,23 +8,46 @@ import DataStore from "../util/DataStore";
 class CreateEventSimple extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewEvent', 'confirmRedirect','submit', 'redirectEditProfile',
-        'redirectAllEvents','redirectCreateEvents','redirectAllFollowing','logout'], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'redirectToViewEvent', 'redirectProfile','confirmRedirect','submit', 'redirectEditProfile',
+        'redirectAllEvents', 'addName','redirectCreateEvents','redirectAllFollowing','logout'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewPlaylist);
         this.header = new Header(this.dataStore);
-        console.log("createvent constructor");
+
     }
+
+  /**
+      * Once the client is loaded, get the profile metadata.
+      */
+     async clientLoaded() {
+         const identity = await this.client.getIdentity();
+         const profile = await this.client.getProfile(identity.email);
+         this.dataStore.set("email", identity.email);
+         this.dataStore.set('profile', profile);
+         this.dataStore.set('firstName', profile.profileModel.firstName);
+         this.dataStore.set('lastName', profile.profileModel.lastName);
+         this.addName();
+
+
+     }
+
+     async addName(){
+             const fname = this.dataStore.get("firstName");
+             const lname = this.dataStore.get("lastName");
+             if (fname == null) {
+                 document.getElementById("names").innerText = "John Smith";
+             }
+             document.getElementById("names").innerText = fname + " " + lname;
+         }
+
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
         document.getElementById('createEvent').addEventListener('click', this.submit);
-        document.getElementById('profilePic').addEventListener('click', this.redirectEditProfile);
+        document.getElementById('profilePic').addEventListener('click', this.redirectProfile);
         document.getElementById('allEvents').addEventListener('click', this.redirectAllEvents);
         document.getElementById('createEvents').addEventListener('click', this.redirectCreateEvents);
-        document.getElementById('allFollowing').addEventListener('click', this.redirectAllFollowing);
-
+        document.getElementById('allFollowing').addEventListener('click', this.redirectProfile);
         document.getElementById('logout').addEventListener('click', this.logout);
         document.getElementById('door').addEventListener('click', this.logout);
         document.getElementById('createEvent').addEventListener('click', this.submit);
@@ -75,6 +98,10 @@ class CreateEventSimple extends BindingClass {
 confirmRedirect() {
     window.location.href = '/profile.html';
     console.log("createEvent button clicked");
+}
+
+redirectProfile(){
+    window.location.href = '/profile.html';
 }
 redirectEditProfile(){
     window.location.href = '/createProfile.html';

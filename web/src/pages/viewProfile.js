@@ -39,7 +39,7 @@ class ViewProfile extends BindingClass {
         document.getElementById('profilePic').addEventListener('click', this.redirectEditProfile);
         document.getElementById('allEvents').addEventListener('click', this.redirectAllEvents);
         document.getElementById('createEvents').addEventListener('click', this.redirectCreateEvents);
-        document.getElementById('allFollowing').addEventListener('click', this.redirectAllFollowing);
+        document.getElementById('allFollowing').addEventListener('click', this.redirectProfile);
         document.getElementById('logout').addEventListener('click', this.logout);
         document.getElementById('door').addEventListener('click', this.logout);
         document.getElementById('names').innerText = "Loading ...";
@@ -116,7 +116,7 @@ class ViewProfile extends BindingClass {
           const myPersonalEventIds = this.dataStore.get("myPersonalEventIds");
                console.log("AddEvents", events);
                if (events == null) {
-                   document.getElementById("event-list").innerText = "There are no events yet under your profile.";
+                   document.getElementById("event-list").innerText = "There are no personal events yet under your profile.";
                } else {
                    let eventResult;
                    let counter = 0;
@@ -161,7 +161,7 @@ class ViewProfile extends BindingClass {
         const following = this.dataStore.get("following");
         if (following == null) {
             document.getElementById("allFollowingListText").remove()
-            document.getElementById("allFollowingList").innerText = "You are not following anyone";
+            document.getElementById("allFollowingList").innerText = "You are not following anyone yet.";
         } else {
         let profileFollowing;
         for (profileFollowing of following) {
@@ -171,7 +171,7 @@ class ViewProfile extends BindingClass {
             anchor.setAttribute('href', 'foriegnView.html?id=${encodeURIComponent('+getName.profileModel.profileId+')}');
             anchor.className = 'nav-link px-4 d-flex flex-column align-items-center smprofile';
             anchor.id = 'foreignPic' + getName.profileModel.profileId;
-
+            anchor.style.pointerEvents = 'none';
             // Create an icon element
             const icon = document.createElement('i');
             icon.className = 'bi bi-person-circle nav-profile-icon-sm';
@@ -204,6 +204,11 @@ class ViewProfile extends BindingClass {
         window.location.href = '/createProfile.html';
         console.log("createEvent button clicked");
     }
+
+    redirectProfile() {
+         window.location.href = '/profile.html';
+        }
+
     redirectAllEvents(){
         window.location.href = '/viewAllEvents.html';
     }
