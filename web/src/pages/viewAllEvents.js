@@ -26,7 +26,6 @@ class ViewAllEvents extends BindingClass {
         this.dataStore.set('events', events);
         this.dataStore.set('firstName', profile.profileModel.firstName);
         this.dataStore.set('lastName', profile.profileModel.lastName);
-//        this.dataStore.set('following', profile.profileModel.following);
         this.addName();
         this.displayEvents();
         console.log(events);
@@ -42,7 +41,7 @@ class ViewAllEvents extends BindingClass {
 //        document.getElementById('profilePic').addEventListener('click', this.redirectEditProfile);
         document.getElementById('allEvents').addEventListener('click', this.redirectAllEvents);
         document.getElementById('createEvents').addEventListener('click', this.redirectCreateEvents);
-        document.getElementById('allFollowing').addEventListener('click', this.redirectAllFollowing);
+        document.getElementById('allFollowing').addEventListener('click', this.redirectProfile);
         document.getElementById('logout').addEventListener('click', this.logout);
         document.getElementById('door').addEventListener('click', this.logout);
         document.getElementById('names').innerText = "Loading ...";
@@ -162,6 +161,11 @@ class ViewAllEvents extends BindingClass {
     redirectAllEvents(){
         window.location.href = '/viewAllEvents.html';
     }
+
+     redirectProfile() {
+         window.location.href = '/profile.html';
+    }
+
     redirectCreateEvents(){
         window.location.href = '/createEvents.html';
     }
