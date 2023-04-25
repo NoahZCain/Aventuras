@@ -26,7 +26,7 @@ class CreateEventSimple extends BindingClass {
          this.dataStore.set('firstName', profile.profileModel.firstName);
          this.dataStore.set('lastName', profile.profileModel.lastName);
          this.addName();
-
+        
 
      }
 
@@ -34,7 +34,7 @@ class CreateEventSimple extends BindingClass {
              const fname = this.dataStore.get("firstName");
              const lname = this.dataStore.get("lastName");
              if (fname == null) {
-                 document.getElementById("names").innerText = "John Smith";
+                 document.getElementById("names").innerText = "You need to create a profile.";
              }
              document.getElementById("names").innerText = fname + " " + lname;
          }
@@ -53,6 +53,7 @@ class CreateEventSimple extends BindingClass {
         document.getElementById('createEvent').addEventListener('click', this.submit);
         this.header.addHeaderToPage();
         this.client = new dannaClient();
+        this.clientLoaded();
     }
     async submit(evt) {
         evt.preventDefault();
@@ -95,33 +96,39 @@ class CreateEventSimple extends BindingClass {
         console.log("redirectToViewEvent");
             window.location.href = `/viewAllEvents.html`;
     }
-confirmRedirect() {
+    confirmRedirect() {
     window.location.href = '/profile.html';
     console.log("createEvent button clicked");
-}
+    }
 
-redirectProfile(){
+    redirectProfile(){
     window.location.href = '/profile.html';
-}
-redirectEditProfile(){
+    }
+
+    redirectEditProfile(){
     window.location.href = '/createProfile.html';
-}
-redirectAllEvents(){
+    }
+
+    redirectAllEvents(){
     window.location.href = '/viewAllEvents.html';
-}
-redirectCreateEvents(){
+    }
+
+    redirectCreateEvents(){
     window.location.href = '/createEvents.html';
-}
-redirectAllFollowing(){
+    }
+
+    redirectAllFollowing(){
     window.location.href = '/allFollowing.html';
-}
-async logout(){
+    }
+
+    async logout(){
     await this.client.logout();
     if(!this.client.isLoggedIn()){
         window.location.href ='/landingPage.html';
     }
 }
 }
+
 /**
  * Main method to run when the page contents have loaded.
  */
